@@ -1,0 +1,1495 @@
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (19.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3481093434804609015)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateDecks (20171016180855)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (14.7ms)[0m  [1m[35mCREATE TABLE "decks" ("id" bigserial primary key, "title" character varying, "description" text, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171016180855"]]
+  [1m[35m (4.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateCards (20171016180910)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.9ms)[0m  [1m[35mCREATE TABLE "cards" ("id" bigserial primary key, "question" character varying, "answer" text, "deck_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_6c4effce17"
+FOREIGN KEY ("deck_id")
+  REFERENCES "decks" ("id")
+)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_cards_on_deck_id" ON "cards"  ("deck_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171016180910"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateGames (20171016192111)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE TABLE "games" ("id" bigserial primary key, "score" integer DEFAULT 0, "deck_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_558f519620"
+FOREIGN KEY ("deck_id")
+  REFERENCES "decks" ("id")
+)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX  "index_games_on_deck_id" ON "games"  ("deck_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171016192111"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-10-17 06:18:44.028499"], ["updated_at", "2017-10-17 06:18:44.028499"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(3481093434804609015)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:18:50.319705"], ["updated_at", "2017-10-17 06:18:50.319705"]]
+  [1m[35m (6.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seattle Attractions"], ["description", "Name the neighborhood of various Seattle attractions."], ["created_at", "2017-10-17 06:18:50.329644"], ["updated_at", "2017-10-17 06:18:50.329644"]]
+  [1m[35m (5.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Famous people from Seattle"], ["description", "Celebrities who claim Seattle as their home."], ["created_at", "2017-10-17 06:18:50.338744"], ["updated_at", "2017-10-17 06:18:50.338744"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the richest man in the world?"], ["answer", "Bill Gates"], ["deck_id", 3], ["created_at", "2017-10-17 06:18:50.384376"], ["updated_at", "2017-10-17 06:18:50.384376"]]
+  [1m[35m (6.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "This man invented Jeet Kune Do."], ["answer", "Bruce Lee"], ["deck_id", 3], ["created_at", "2017-10-17 06:18:50.397001"], ["updated_at", "2017-10-17 06:18:50.397001"]]
+  [1m[35m (6.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "He played his guitar upside-down because he was left-handed."], ["answer", "Jimi Hendrix"], ["deck_id", 3], ["created_at", "2017-10-17 06:18:50.409760"], ["updated_at", "2017-10-17 06:18:50.409760"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/" for 127.0.0.1 at 2017-10-16 23:19:23 -0700
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.7ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (14.7ms)
+Completed 200 OK in 688ms (Views: 671.3ms | ActiveRecord: 4.7ms)
+
+
+Started POST "/games?id=3" for 127.0.0.1 at 2017-10-16 23:19:29 -0700
+Processing by GamesController#create as HTML
+  Parameters: {"authenticity_token"=>"Y5an28AYTzhU+lv4W2YtXw4xu1gH30jBq/1UkW/942zbvfsGvpRGMMeWE/hT1pfco+w67a9E5CEH8o01ApJpRA==", "id"=>"3"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.5ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (1.6ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 3], ["created_at", "2017-10-17 06:19:29.525644"], ["updated_at", "2017-10-17 06:19:29.525644"]]
+  [1m[35m (6.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mCard Load (0.5ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/decks/3/cards/1
+Completed 302 Found in 84ms (ActiveRecord: 15.6ms)
+
+
+Started GET "/decks/3/cards/1" for 127.0.0.1 at 2017-10-16 23:19:29 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"1"}
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.8ms)
+Completed 200 OK in 31ms (Views: 26.1ms | ActiveRecord: 0.6ms)
+
+
+Started PUT "/games/1" for 127.0.0.1 at 2017-10-16 23:19:37 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"DHx15+zpwlElvwo6OQQv23guM7hlPDFXZERXhLAjLty0Vyk6kmXLWbbTQjoxtJVY1fOyDc2nnbfIS44g3Uyk9A==", "card"=>"1", "answer"=>"Bill Gates", "commit"=>"Submit Answer", "id"=>"1"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 1], ["updated_at", "2017-10-17 06:19:37.950924"], ["id", 1]]
+  [1m[35m (6.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Redirected to http://localhost:3000/decks/3/cards/2
+Completed 302 Found in 16ms (ActiveRecord: 8.0ms)
+
+
+Started GET "/decks/3/cards/2" for 127.0.0.1 at 2017-10-16 23:19:37 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"2"}
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.2ms)
+Completed 200 OK in 25ms (Views: 21.4ms | ActiveRecord: 0.6ms)
+
+
+Started PUT "/games/1" for 127.0.0.1 at 2017-10-16 23:30:00 -0700
+  
+SyntaxError (/Users/yihdego/Desktop/sinatra-to-rails-pick-1-of-3-challenge/app/controllers/games_controller.rb:26: syntax error, unexpected end-of-input, expecting keyword_end):
+  
+app/controllers/games_controller.rb:26: syntax error, unexpected end-of-input, expecting keyword_end
+Started PUT "/games/1" for 127.0.0.1 at 2017-10-16 23:31:28 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"+eNsdOFcFXNfaiCaGEftFGqD4D448ZVyFEIOr6dM/vtByDCpn9Ace8wGaJoQ91eXx15hi5BqOZK4TdcLyiN00w==", "card"=>"2", "answer"=>"Bruce Lee", "commit"=>"Submit Answer", "id"=>"1"}
+  [1m[36mGame Load (0.2ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.9ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 2], ["updated_at", "2017-10-17 06:31:28.511856"], ["id", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Completed 500 Internal Server Error in 57ms (ActiveRecord: 11.7ms)
+
+
+  
+NoMethodError (undefined method `count' for #<Deck:0x007fec03c6b758>):
+  
+app/controllers/games_controller.rb:17:in `update'
+Started PUT "/games/1" for 127.0.0.1 at 2017-10-16 23:31:44 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"+eNsdOFcFXNfaiCaGEftFGqD4D448ZVyFEIOr6dM/vtByDCpn9Ace8wGaJoQ91eXx15hi5BqOZK4TdcLyiN00w==", "card"=>"2", "answer"=>"Bruce Lee", "commit"=>"Submit Answer", "id"=>"1"}
+  [1m[36mGame Load (0.2ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 3], ["updated_at", "2017-10-17 06:31:44.671895"], ["id", 1]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Completed 500 Internal Server Error in 213ms (ActiveRecord: 12.2ms)
+
+
+  
+NameError (undefined local variable or method `game' for #<GamesController:0x007fec03f27d48>
+Did you mean?  @game):
+  
+app/controllers/games_controller.rb:20:in `update'
+Started PUT "/games/1" for 127.0.0.1 at 2017-10-16 23:33:12 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"+eNsdOFcFXNfaiCaGEftFGqD4D448ZVyFEIOr6dM/vtByDCpn9Ace8wGaJoQ91eXx15hi5BqOZK4TdcLyiN00w==", "card"=>"2", "answer"=>"Bruce Lee", "commit"=>"Submit Answer", "id"=>"1"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 4], ["updated_at", "2017-10-17 06:33:12.771773"], ["id", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Completed 500 Internal Server Error in 192ms (ActiveRecord: 11.6ms)
+
+
+  
+NameError (undefined local variable or method `game_show_path' for #<GamesController:0x007fec0a0205c8>
+Did you mean?  games_path):
+  
+app/controllers/games_controller.rb:20:in `update'
+Started PUT "/games/1" for 127.0.0.1 at 2017-10-16 23:33:26 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"+eNsdOFcFXNfaiCaGEftFGqD4D448ZVyFEIOr6dM/vtByDCpn9Ace8wGaJoQ91eXx15hi5BqOZK4TdcLyiN00w==", "card"=>"2", "answer"=>"Bruce Lee", "commit"=>"Submit Answer", "id"=>"1"}
+  [1m[36mGame Load (0.6ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.8ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 5], ["updated_at", "2017-10-17 06:33:26.148343"], ["id", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/games
+Completed 302 Found in 60ms (ActiveRecord: 11.4ms)
+
+
+Started GET "/games" for 127.0.0.1 at 2017-10-16 23:33:26 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/games"):
+  
+actionpack (5.1.4) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
+web-console (3.5.1) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.5.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.5.1) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.4) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.4) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.4) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.3) lib/rack/method_override.rb:22:in `call'
+rack (2.0.3) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.4) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.4) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.3) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.4) lib/rails/engine.rb:522:in `call'
+puma (3.10.0) lib/puma/configuration.rb:225:in `call'
+puma (3.10.0) lib/puma/server.rb:605:in `handle_request'
+puma (3.10.0) lib/puma/server.rb:437:in `process_client'
+puma (3.10.0) lib/puma/server.rb:301:in `block in run'
+puma (3.10.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started PUT "/games/1" for 127.0.0.1 at 2017-10-16 23:33:48 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"+eNsdOFcFXNfaiCaGEftFGqD4D448ZVyFEIOr6dM/vtByDCpn9Ace8wGaJoQ91eXx15hi5BqOZK4TdcLyiN00w==", "card"=>"2", "answer"=>"Bruce Lee", "commit"=>"Submit Answer", "id"=>"1"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 6], ["updated_at", "2017-10-17 06:33:48.874766"], ["id", 1]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Completed 500 Internal Server Error in 246ms (ActiveRecord: 11.1ms)
+
+
+  
+NameError (undefined local variable or method `game_show_path' for #<GamesController:0x007fec092f9250>
+Did you mean?  games_path):
+  
+app/controllers/games_controller.rb:20:in `update'
+Started PUT "/games/1" for 127.0.0.1 at 2017-10-16 23:35:04 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"+eNsdOFcFXNfaiCaGEftFGqD4D448ZVyFEIOr6dM/vtByDCpn9Ace8wGaJoQ91eXx15hi5BqOZK4TdcLyiN00w==", "card"=>"2", "answer"=>"Bruce Lee", "commit"=>"Submit Answer", "id"=>"1"}
+  [1m[36mGame Load (0.2ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 7], ["updated_at", "2017-10-17 06:35:04.892990"], ["id", 1]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/games/1
+Completed 302 Found in 61ms (ActiveRecord: 11.6ms)
+
+
+Started GET "/games/1" for 127.0.0.1 at 2017-10-16 23:35:04 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mGame Load (0.4ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.7ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 29ms (Views: 24.6ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-16 23:35:15 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 20ms (Views: 19.0ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/games?id=3" for 127.0.0.1 at 2017-10-16 23:35:17 -0700
+Processing by GamesController#create as HTML
+  Parameters: {"authenticity_token"=>"fpYeOtLTmEENxWfixjxlsx8RqqDo6IYRHHvhWzJ3pLLGvULnrF+RSZ6pL+LOjN8wsswrFUBzKvGwdDj/Xxgumg==", "id"=>"3"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 3], ["created_at", "2017-10-17 06:35:17.811699"], ["updated_at", "2017-10-17 06:35:17.811699"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/decks/3/cards/1
+Completed 302 Found in 9ms (ActiveRecord: 1.8ms)
+
+
+Started GET "/decks/3/cards/1" for 127.0.0.1 at 2017-10-16 23:35:17 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"1"}
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.4ms)
+Completed 200 OK in 25ms (Views: 21.3ms | ActiveRecord: 0.5ms)
+
+
+Started PUT "/games/2" for 127.0.0.1 at 2017-10-16 23:35:22 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"qmAD14HCD1Wl0RLna59V7a/OsGg8niqy2uWMLTZVYkkSS18K/04GXTa9WudjL+9uAhMx3ZQFhlJ26lWJWzroYQ==", "card"=>"1", "answer"=>"Bill Gates", "commit"=>"Submit Answer", "id"=>"2"}
+  [1m[36mGame Load (0.2ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 1], ["updated_at", "2017-10-17 06:35:22.189957"], ["id", 2]]
+  [1m[35m (6.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Redirected to http://localhost:3000/decks/3/cards/2
+Completed 302 Found in 16ms (ActiveRecord: 8.1ms)
+
+
+Started GET "/decks/3/cards/2" for 127.0.0.1 at 2017-10-16 23:35:22 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"2"}
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 21ms (Views: 18.0ms | ActiveRecord: 0.6ms)
+
+
+Started PUT "/games/2" for 127.0.0.1 at 2017-10-16 23:35:28 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"XRJucjR0Ze1lUCAmnFvfO2+lM/Sdk/8DVqKVllODRrXlOTKvSvhs5fY8aCaU62W4wniyQTUIU+P6rUwyPuzMnQ==", "card"=>"2", "answer"=>"Bruce Lee", "commit"=>"Submit Answer", "id"=>"2"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 2], ["updated_at", "2017-10-17 06:35:28.253974"], ["id", 2]]
+  [1m[35m (6.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/games/2
+Completed 302 Found in 15ms (ActiveRecord: 8.0ms)
+
+
+Started GET "/games/2" for 127.0.0.1 at 2017-10-16 23:35:28 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.6ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 26ms (Views: 22.0ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-16 23:35:58 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (11.9ms)
+Completed 200 OK in 39ms (Views: 29.9ms | ActiveRecord: 3.1ms)
+
+
+Started POST "/games?id=3" for 127.0.0.1 at 2017-10-16 23:35:59 -0700
+  
+SyntaxError (/Users/yihdego/Desktop/sinatra-to-rails-pick-1-of-3-challenge/app/controllers/games_controller.rb:17: syntax error, unexpected '<'
+    if next_question =< @game.deck.cards.count
+                       ^
+/Users/yihdego/Desktop/sinatra-to-rails-pick-1-of-3-challenge/app/controllers/games_controller.rb:27: syntax error, unexpected keyword_end, expecting end-of-input):
+  
+app/controllers/games_controller.rb:17: syntax error, unexpected '<'
+app/controllers/games_controller.rb:27: syntax error, unexpected keyword_end, expecting end-of-input
+Started POST "/games?id=3" for 127.0.0.1 at 2017-10-16 23:36:33 -0700
+Processing by GamesController#create as HTML
+  Parameters: {"authenticity_token"=>"PyeX3VjNEpgPD258P7LFKS/RMgNBFi92MOOGDKzDY4CHDMsAJkEbkJxjJnw3An+qggyztumNg5ac7F+owazpqA==", "id"=>"3"}
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 3], ["created_at", "2017-10-17 06:36:33.693379"], ["updated_at", "2017-10-17 06:36:33.693379"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/decks/3/cards/1
+Completed 302 Found in 56ms (ActiveRecord: 9.8ms)
+
+
+Started GET "/decks/3/cards/1" for 127.0.0.1 at 2017-10-16 23:36:33 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"1"}
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.2ms)
+Completed 200 OK in 23ms (Views: 20.0ms | ActiveRecord: 0.4ms)
+
+
+Started PUT "/games/3" for 127.0.0.1 at 2017-10-16 23:36:37 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"kRZ7rhVa+D+9uhRGBUMAtbeaWxvaz1GEo9cxv5HukjkpPSdza9bxNy7WXEYN87o2GkfarnJU/WQP2Ogb/IEYEQ==", "card"=>"1", "answer"=>"Bill Gates", "commit"=>"Submit Answer", "id"=>"3"}
+  [1m[36mGame Load (0.2ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 1], ["updated_at", "2017-10-17 06:36:37.625143"], ["id", 3]]
+  [1m[35m (6.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Redirected to http://localhost:3000/decks/3/cards/2
+Completed 302 Found in 16ms (ActiveRecord: 8.1ms)
+
+
+Started GET "/decks/3/cards/2" for 127.0.0.1 at 2017-10-16 23:36:37 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"2"}
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 29ms (Views: 25.9ms | ActiveRecord: 0.6ms)
+
+
+Started PUT "/games/3" for 127.0.0.1 at 2017-10-16 23:36:42 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"0Gsfr/b7evvONpijSwG5xcbaB122RjMgElJHA8owWHtoQENyiHdz811a0KNDsQNGaweG6B7dn8C+XZ6np1/SUw==", "card"=>"2", "answer"=>"Bruce Lee", "commit"=>"Submit Answer", "id"=>"3"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCard Load (0.4ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 2], ["updated_at", "2017-10-17 06:36:42.008386"], ["id", 3]]
+  [1m[35m (6.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+Redirected to http://localhost:3000/decks/3/cards/3
+Completed 302 Found in 16ms (ActiveRecord: 8.3ms)
+
+
+Started GET "/decks/3/cards/3" for 127.0.0.1 at 2017-10-16 23:36:42 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"3"}
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 22ms (Views: 19.2ms | ActiveRecord: 0.6ms)
+
+
+Started PUT "/games/3" for 127.0.0.1 at 2017-10-16 23:36:47 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"M2bqv5TzbsbforXuLdF7tpSOViCp3gbOVzOuyLa8Pv+LTbZi6n9nzkzO/e4lYcE1OVPXlQFFqi77PHds29O01w==", "card"=>"3", "answer"=>"Jimi Hendrix", "commit"=>"Submit Answer", "id"=>"3"}
+  [1m[36mGame Load (0.5ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 3], ["updated_at", "2017-10-17 06:36:47.367644"], ["id", 3]]
+  [1m[35m (6.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/games/3
+Completed 302 Found in 14ms (ActiveRecord: 7.9ms)
+
+
+Started GET "/games/3" for 127.0.0.1 at 2017-10-16 23:36:47 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.6ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 29ms (Views: 25.4ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/games/3" for 127.0.0.1 at 2017-10-16 23:43:03 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mGame Load (0.5ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (1.8ms)
+Completed 200 OK in 31ms (Views: 26.8ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/games/3" for 127.0.0.1 at 2017-10-16 23:46:54 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mGame Load (0.4ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 69ms (Views: 65.2ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/games/3" for 127.0.0.1 at 2017-10-16 23:47:44 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 42ms (Views: 38.5ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/games/3" for 127.0.0.1 at 2017-10-16 23:47:46 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (2.0ms)
+Completed 200 OK in 28ms (Views: 23.5ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/games/3" for 127.0.0.1 at 2017-10-16 23:48:10 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mGame Load (0.4ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (2.0ms)
+Completed 200 OK in 28ms (Views: 23.8ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/games/3" for 127.0.0.1 at 2017-10-16 23:48:34 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mGame Load (0.4ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.5ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 39ms (Views: 34.7ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/games/3" for 127.0.0.1 at 2017-10-16 23:48:36 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (1.8ms)
+Completed 200 OK in 27ms (Views: 23.0ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/games/3" for 127.0.0.1 at 2017-10-16 23:52:24 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 39ms (Views: 35.6ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/games/3" for 127.0.0.1 at 2017-10-16 23:53:26 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.6ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 29ms (Views: 25.1ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/games/3" for 127.0.0.1 at 2017-10-16 23:53:43 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 28ms (Views: 24.2ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/games/3" for 127.0.0.1 at 2017-10-16 23:53:53 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (215.4ms)
+Completed 500 Internal Server Error in 223ms (ActiveRecord: 0.7ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `decks_path_url' for #<#<Class:0x007fec0a9a1cc8>:0x007fec0b8a2128>
+Did you mean?  decks_path
+               deck_card_url):
+    2: 
+    3: <div class="show-container">
+    4:   <p><%= @game.score %></p>
+    5:   <h3> <%= link_to decks_path_url %> </h3>
+    6: </div>
+  
+app/views/games/show.html.erb:5:in `_app_views_games_show_html_erb___808693444868682029_70325891306880'
+Started GET "/games/3" for 127.0.0.1 at 2017-10-16 23:54:08 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mGame Load (0.4ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (287.6ms)
+Completed 500 Internal Server Error in 297ms (ActiveRecord: 0.8ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `root' for #<#<Class:0x007fec0a9a1cc8>:0x007fec090413f0>):
+    2: 
+    3: <div class="show-container">
+    4:   <p><%= @game.score %></p>
+    5:   <h3> <%= link_to root %> </h3>
+    6: </div>
+  
+app/views/games/show.html.erb:5:in `_app_views_games_show_html_erb___808693444868682029_70325870166360'
+Started GET "/games/3" for 127.0.0.1 at 2017-10-16 23:54:41 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mGame Load (0.5ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 24ms (Views: 20.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/games/3" for 127.0.0.1 at 2017-10-16 23:55:13 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mGame Load (0.4ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 26ms (Views: 22.7ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-16 23:55:16 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 20ms (Views: 19.7ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-16 23:55:47 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 34ms (Views: 33.0ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-16 23:56:22 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 22ms (Views: 21.5ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-16 23:56:34 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 25ms (Views: 24.5ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-16 23:58:04 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (3.7ms)
+Completed 200 OK in 60ms (Views: 59.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-16 23:58:20 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 27ms (Views: 26.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:04:09 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 40ms (Views: 39.1ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:05:58 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 69ms (Views: 68.8ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:06:01 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 25ms (Views: 24.3ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/games?id=3" for 127.0.0.1 at 2017-10-17 00:06:02 -0700
+Processing by GamesController#create as HTML
+  Parameters: {"authenticity_token"=>"Iqo19dwkrE//IW4+LupQTNou4pNLi3lDolP0b0m+8BiagWkooqilR2xNJj4mWurPd/NjJuMQ1aMOXC3LJNF6MA==", "id"=>"3"}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 3], ["created_at", "2017-10-17 07:06:02.404922"], ["updated_at", "2017-10-17 07:06:02.404922"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mCard Load (0.4ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/decks/3/cards/1
+Completed 302 Found in 7ms (ActiveRecord: 1.7ms)
+
+
+Started GET "/decks/3/cards/1" for 127.0.0.1 at 2017-10-17 00:06:02 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"1"}
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 26ms (Views: 23.5ms | ActiveRecord: 0.4ms)
+
+
+Started PUT "/games/4" for 127.0.0.1 at 2017-10-17 00:07:12 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"+7hrcYZnHHk91Y4uhPSO3QAziBDsZ+EAjY7F+FozjrNDkzes+OsVca65xi6MRDRere4JpUT8TeAhgRxcN1wEmw==", "card"=>"1", "answer"=>"Steve Bozo", "commit"=>"Submit Answer", "id"=>"4"}
+  [1m[36mGame Load (0.2ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+  [1m[36mCard Load (0.4ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Redirected to http://localhost:3000/decks/3/cards/2
+Completed 302 Found in 8ms (ActiveRecord: 1.9ms)
+
+
+Started GET "/decks/3/cards/2" for 127.0.0.1 at 2017-10-17 00:07:12 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"2"}
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.6ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (4.5ms)
+Completed 200 OK in 48ms (Views: 44.8ms | ActiveRecord: 0.9ms)
+
+
+Started PUT "/games/4" for 127.0.0.1 at 2017-10-17 00:07:18 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"lD5+4bGpMpQJ+RvAYIs/R2Yk1Tzg60K5AIW2dRPmEwgsFSI8zyU7nJqVU8BoO4XEy/lUiUhw7lmsim/RfomZIA==", "card"=>"2", "answer"=>"Jackie Chan", "commit"=>"Submit Answer", "id"=>"4"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.5ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+Redirected to http://localhost:3000/decks/3/cards/3
+Completed 302 Found in 11ms (ActiveRecord: 2.4ms)
+
+
+Started GET "/decks/3/cards/3" for 127.0.0.1 at 2017-10-17 00:07:18 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"3"}
+  [1m[36mCard Load (0.4ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.7ms)
+Completed 200 OK in 38ms (Views: 34.5ms | ActiveRecord: 0.8ms)
+
+
+Started PUT "/games/4" for 127.0.0.1 at 2017-10-17 00:07:25 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"QzCO4He8gDe3X1bukeoBJOghCnHJNSDYktIX7GpWGvj7G9I9CTCJPyQzHu6ZWrunRfyLxGGujDg+3c5IBzmQ0A==", "card"=>"3", "answer"=>"Kurt Cobain", "commit"=>"Submit Answer", "id"=>"4"}
+  [1m[36mGame Load (0.4ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/games/4
+Completed 302 Found in 8ms (ActiveRecord: 1.9ms)
+
+
+Started GET "/games/4" for 127.0.0.1 at 2017-10-17 00:07:25 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 30ms (Views: 26.5ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:07:28 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 33ms (Views: 32.2ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/games?id=3" for 127.0.0.1 at 2017-10-17 00:07:46 -0700
+Processing by GamesController#create as HTML
+  Parameters: {"authenticity_token"=>"lh9upafL5Tc4NV8Or2wnrO/t6YC5pXW9jX6fOx8oqyQuNDJ42UfsP6tZFw6n3J0vQjBoNRE+2V0hcUafckchDA==", "id"=>"3"}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 3], ["created_at", "2017-10-17 07:07:46.201995"], ["updated_at", "2017-10-17 07:07:46.201995"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/decks/3/cards/1
+Completed 302 Found in 7ms (ActiveRecord: 1.6ms)
+
+
+Started GET "/decks/3/cards/1" for 127.0.0.1 at 2017-10-17 00:07:46 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"1"}
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 28ms (Views: 25.0ms | ActiveRecord: 0.5ms)
+
+
+Started PUT "/games/5" for 127.0.0.1 at 2017-10-17 00:07:51 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"WX9uccMMVdr8IpSHH7kiS37QMrL/9SMP2V6Qi/wms3LhVDKsvYBc0m9O3IcXCZjI0w2zB1duj+91UUkvkUk5Wg==", "card"=>"1", "answer"=>"bo", "commit"=>"Submit Answer", "id"=>"5"}
+  [1m[36mGame Load (0.2ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Redirected to http://localhost:3000/decks/3/cards/2
+Completed 302 Found in 9ms (ActiveRecord: 1.7ms)
+
+
+Started GET "/decks/3/cards/2" for 127.0.0.1 at 2017-10-17 00:07:51 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"2"}
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.2ms)
+Completed 200 OK in 27ms (Views: 23.9ms | ActiveRecord: 0.6ms)
+
+
+Started PUT "/games/5" for 127.0.0.1 at 2017-10-17 00:07:54 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"rm3nLNp1TO2KCLg/SqtDbWrlUuWr4QjfR0vVd9nZf/QWRrvxpPlF5Rlk8D9CG/nuxzjTUAN6pD/rRAzTtLb13A==", "card"=>"2", "answer"=>"bob", "commit"=>"Submit Answer", "id"=>"5"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+Redirected to http://localhost:3000/decks/3/cards/3
+Completed 302 Found in 9ms (ActiveRecord: 2.1ms)
+
+
+Started GET "/decks/3/cards/3" for 127.0.0.1 at 2017-10-17 00:07:54 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"3"}
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 27ms (Views: 24.0ms | ActiveRecord: 0.6ms)
+
+
+Started PUT "/games/5" for 127.0.0.1 at 2017-10-17 00:07:58 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"mXR+EYrCUsPZatmwYT/ndNQMKKsCkxNvGS8bYbZD7cghXyLM9E5by0oGkbBpj133edGpHqoIv4+1IMLF2yxn4A==", "card"=>"3", "answer"=>"ken", "commit"=>"Submit Answer", "id"=>"5"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/games/5
+Completed 302 Found in 7ms (ActiveRecord: 1.5ms)
+
+
+Started GET "/games/5" for 127.0.0.1 at 2017-10-17 00:07:58 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 42ms (Views: 20.2ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:08:07 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 23ms (Views: 23.0ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/games?id=3" for 127.0.0.1 at 2017-10-17 00:10:23 -0700
+Processing by GamesController#create as HTML
+  Parameters: {"authenticity_token"=>"KviYSq0FS1mFtxI73qs0txVDz+QTWYGhrXnibwndmfOS08SX04lCURbbWjvWG440uJ5OUbvCLUEBdjvLZLIT2w==", "id"=>"3"}
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 3], ["created_at", "2017-10-17 07:10:23.013399"], ["updated_at", "2017-10-17 07:10:23.013399"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/decks/3/cards/1
+Completed 302 Found in 7ms (ActiveRecord: 1.6ms)
+
+
+Started GET "/decks/3/cards/1" for 127.0.0.1 at 2017-10-17 00:10:23 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"1"}
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 46ms (Views: 42.7ms | ActiveRecord: 0.5ms)
+
+
+Started PUT "/games/6" for 127.0.0.1 at 2017-10-17 00:10:28 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"xAnBwfxMuL8Ex8nBcS8wYbp5bQFuWpfDIFfxCHIUtMV8Ip0cgsCxt5ergcF5n4riF6TstMbBOyOMWCisH3s+7Q==", "card"=>"1", "answer"=>"Bill Gates", "commit"=>"Submit Answer", "id"=>"6"}
+  [1m[36mGame Load (0.2ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 1], ["updated_at", "2017-10-17 07:10:28.626098"], ["id", 6]]
+  [1m[35m (6.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+  [1m[36mCard Load (0.6ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Redirected to http://localhost:3000/decks/3/cards/2
+Completed 302 Found in 16ms (ActiveRecord: 8.3ms)
+
+
+Started GET "/decks/3/cards/2" for 127.0.0.1 at 2017-10-17 00:10:28 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"2"}
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 30ms (Views: 26.4ms | ActiveRecord: 0.8ms)
+
+
+Started PUT "/games/6" for 127.0.0.1 at 2017-10-17 00:10:35 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"4DSYIYdT+T+UUmp9665bGpRbEkPfBdPrkxymL9sd4WZYH8T8+d/wNwc+In3jHuGZOYaT9neefws/E3+LtnJrTg==", "card"=>"2", "answer"=>"Jackie Chan", "commit"=>"Submit Answer", "id"=>"6"}
+  [1m[36mGame Load (0.5ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mCard Load (0.4ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+  [1m[36mCard Load (0.6ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+Redirected to http://localhost:3000/decks/3/cards/3
+Completed 302 Found in 9ms (ActiveRecord: 2.6ms)
+
+
+Started GET "/decks/3/cards/3" for 127.0.0.1 at 2017-10-17 00:10:35 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"3"}
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 33ms (Views: 29.3ms | ActiveRecord: 0.7ms)
+
+
+Started PUT "/games/6" for 127.0.0.1 at 2017-10-17 00:10:40 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"ZQHjI1aad7QLHA47XaUqA/ko6Cl3hpLQh9zH7ImZj8TdKr/+KBZ+vJhwRjtVFZCAVPVpnN8dPjAr0x5I5PYF7A==", "card"=>"3", "answer"=>"Howard the Duck", "commit"=>"Submit Answer", "id"=>"6"}
+  [1m[36mGame Load (0.4ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/games/6
+Completed 302 Found in 8ms (ActiveRecord: 1.8ms)
+
+
+Started GET "/games/6" for 127.0.0.1 at 2017-10-17 00:10:40 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"6"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 28ms (Views: 24.2ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:10:44 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 24ms (Views: 23.0ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:11:18 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 30ms (Views: 29.6ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/games?id=3" for 127.0.0.1 at 2017-10-17 00:11:20 -0700
+Processing by GamesController#create as HTML
+  Parameters: {"authenticity_token"=>"9DBO9P8rWJFSiLd2kKrsLSKZXsGr0fM0Psg10Ee0fvtMGxIpgadRmcHk/3aYGlauj0TfdANKX9SSx+x0Ktv00w==", "id"=>"3"}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 3], ["created_at", "2017-10-17 07:11:20.296672"], ["updated_at", "2017-10-17 07:11:20.296672"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/decks/3/cards/1
+Completed 302 Found in 7ms (ActiveRecord: 1.4ms)
+
+
+Started GET "/decks/3/cards/1" for 127.0.0.1 at 2017-10-17 00:11:20 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"1"}
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 28ms (Views: 24.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:11:54 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 37ms (Views: 36.3ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/games?id=3" for 127.0.0.1 at 2017-10-17 00:11:56 -0700
+Processing by GamesController#create as HTML
+  Parameters: {"authenticity_token"=>"vKfH8xQpTAC/THk8nT7lKs8Vq9lzkzbeNpPLGORgBnQEjJsuaqVFCCwgMTyVjl+pYsgqbNsImj6anBK8iQ+MXA==", "id"=>"3"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 3], ["created_at", "2017-10-17 07:11:56.090225"], ["updated_at", "2017-10-17 07:11:56.090225"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/decks/3/cards/1
+Completed 302 Found in 7ms (ActiveRecord: 1.3ms)
+
+
+Started GET "/decks/3/cards/1" for 127.0.0.1 at 2017-10-17 00:11:56 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"1"}
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.2ms)
+Completed 200 OK in 29ms (Views: 25.3ms | ActiveRecord: 0.6ms)
+
+
+Started PUT "/games/8" for 127.0.0.1 at 2017-10-17 00:12:01 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"echYcRNfjV4/bU6mW7kb6Pjp2/fjZgoU2a4Hy5mozkTB4wSsbdOEVqwBBqZTCaFrVTRaQkv9pvR1od5v9MdEbA==", "card"=>"1", "answer"=>"Bill Gates", "commit"=>"Submit Answer", "id"=>"8"}
+  [1m[36mGame Load (0.2ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 1], ["updated_at", "2017-10-17 07:12:01.184909"], ["id", 8]]
+  [1m[35m (5.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Redirected to http://localhost:3000/decks/3/cards/2
+Completed 302 Found in 15ms (ActiveRecord: 7.8ms)
+
+
+Started GET "/decks/3/cards/2" for 127.0.0.1 at 2017-10-17 00:12:01 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"2"}
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (9.3ms)
+Completed 200 OK in 31ms (Views: 27.9ms | ActiveRecord: 0.8ms)
+
+
+Started PUT "/games/8" for 127.0.0.1 at 2017-10-17 00:12:08 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"xGhEi4vNYb+znq8ompb0/9LjUbAdbUnQgxRwin8oCWd8QxhW9UFotyDy5yiSJk58fz7QBbX25TAvG6kuEkeDTw==", "card"=>"2", "answer"=>"Shaq", "commit"=>"Submit Answer", "id"=>"8"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+  [1m[36mCard Load (0.5ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+Redirected to http://localhost:3000/decks/3/cards/3
+Completed 302 Found in 9ms (ActiveRecord: 2.3ms)
+
+
+Started GET "/decks/3/cards/3" for 127.0.0.1 at 2017-10-17 00:12:08 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"3"}
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 24ms (Views: 21.2ms | ActiveRecord: 0.7ms)
+
+
+Started PUT "/games/8" for 127.0.0.1 at 2017-10-17 00:12:12 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"GtxzowqIPEBAnSALjjGEIrLBLM+MTwsL4u77jG8xiFui9y9+dAQ1SNPxaAuGgT6hHxyteiTUp+tO4SIoAl4Ccw==", "card"=>"3", "answer"=>"Jimi Hendrix", "commit"=>"Submit Answer", "id"=>"8"}
+  [1m[36mGame Load (0.4ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 2], ["updated_at", "2017-10-17 07:12:12.750629"], ["id", 8]]
+  [1m[35m (6.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/games/8
+Completed 302 Found in 15ms (ActiveRecord: 8.1ms)
+
+
+Started GET "/games/8" for 127.0.0.1 at 2017-10-17 00:12:12 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"8"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.5ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 30ms (Views: 26.4ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:12:16 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 25ms (Views: 24.4ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:14:04 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 37ms (Views: 36.9ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:14:07 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 23ms (Views: 22.1ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:14:19 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 23ms (Views: 22.7ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/games?id=3" for 127.0.0.1 at 2017-10-17 00:14:20 -0700
+Processing by GamesController#create as HTML
+  Parameters: {"authenticity_token"=>"K6M041x2+ohPCH6dDzYSkAU7wSZquMi5g8frHJojDcyTiGg+IvrzgNxkNp0HhqgTqOZAk8IjZFkvyDK490yH5A==", "id"=>"3"}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 3], ["created_at", "2017-10-17 07:14:20.324653"], ["updated_at", "2017-10-17 07:14:20.324653"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/decks/3/cards/1
+Completed 302 Found in 7ms (ActiveRecord: 1.4ms)
+
+
+Started GET "/decks/3/cards/1" for 127.0.0.1 at 2017-10-17 00:14:20 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"1"}
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 25ms (Views: 22.1ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/decks/3/cards/1" for 127.0.0.1 at 2017-10-17 00:14:52 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"1"}
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 27ms (Views: 24.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:14:56 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.9ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (5.0ms)
+Completed 200 OK in 31ms (Views: 30.0ms | ActiveRecord: 0.9ms)
+
+
+Started POST "/games?id=3" for 127.0.0.1 at 2017-10-17 00:15:03 -0700
+Processing by GamesController#create as HTML
+  Parameters: {"authenticity_token"=>"TVqZgbu9tT1i4UBSEsdbDb3ObyncVsGy3je83VfOUvn1ccVcxTG8NfGNCFIad+GOEBPunHTNbVJyOGV5OqHY0Q==", "id"=>"3"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 3], ["created_at", "2017-10-17 07:15:03.754947"], ["updated_at", "2017-10-17 07:15:03.754947"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/decks/3/cards/1
+Completed 302 Found in 7ms (ActiveRecord: 1.4ms)
+
+
+Started GET "/decks/3/cards/1" for 127.0.0.1 at 2017-10-17 00:15:03 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"1"}
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 33ms (Views: 29.5ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:15:37 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 30ms (Views: 29.6ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:15:57 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 37ms (Views: 36.5ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/games?id=3" for 127.0.0.1 at 2017-10-17 00:16:07 -0700
+Processing by GamesController#create as HTML
+  Parameters: {"authenticity_token"=>"Pu8wXRbT7aCMMponwnh5++U8rOVjnJYAPzHJBY0SpKOGxGyAaF/kqB9e0ifKyMN4SOEtUMsHOuCTPhCh4H0uiw==", "id"=>"3"}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 3], ["created_at", "2017-10-17 07:16:07.578447"], ["updated_at", "2017-10-17 07:16:07.578447"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/decks/3/cards/1
+Completed 302 Found in 7ms (ActiveRecord: 1.3ms)
+
+
+Started GET "/decks/3/cards/1" for 127.0.0.1 at 2017-10-17 00:16:07 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"1"}
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 30ms (Views: 27.2ms | ActiveRecord: 0.4ms)
+
+
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (8226.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "FlashCards_development"[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (3211.1ms)[0m  [1m[35mDROP DATABASE IF EXISTS "FlashCards_development"[0m
+  [1m[35m (192.1ms)[0m  [1m[35mDROP DATABASE IF EXISTS "FlashCards_test"[0m
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3481093434804609015)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateDecks (20171016180855)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE TABLE "decks" ("id" bigserial primary key, "title" character varying, "description" text, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171016180855"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateCards (20171016180910)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.3ms)[0m  [1m[35mCREATE TABLE "cards" ("id" bigserial primary key, "question" character varying, "answer" text, "deck_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_6c4effce17"
+FOREIGN KEY ("deck_id")
+  REFERENCES "decks" ("id")
+)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_cards_on_deck_id" ON "cards"  ("deck_id")[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171016180910"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateGames (20171016192111)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "games" ("id" bigserial primary key, "score" integer DEFAULT 0, "deck_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_558f519620"
+FOREIGN KEY ("deck_id")
+  REFERENCES "decks" ("id")
+)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX  "index_games_on_deck_id" ON "games"  ("deck_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20171016192111"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-10-17 07:25:33.435242"], ["updated_at", "2017-10-17 07:25:33.435242"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(3481093434804609015)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 07:25:38.664409"], ["updated_at", "2017-10-17 07:25:38.664409"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seattle Attractions"], ["description", "Name the neighborhood of various Seattle attractions."], ["created_at", "2017-10-17 07:25:38.668726"], ["updated_at", "2017-10-17 07:25:38.668726"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Famous people from Seattle"], ["description", "Celebrities who claim Seattle as their home."], ["created_at", "2017-10-17 07:25:38.671962"], ["updated_at", "2017-10-17 07:25:38.671962"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.7ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man?"], ["answer", "the fans"], ["deck_id", 1], ["created_at", "2017-10-17 07:25:38.711735"], ["updated_at", "2017-10-17 07:25:38.711735"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "What day did the Beast Quake happen?"], ["answer", "January 8, 2011"], ["deck_id", 1], ["created_at", "2017-10-17 07:25:38.717931"], ["updated_at", "2017-10-17 07:25:38.717931"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Name the coach who took the Seahawks to their first Super Bowl"], ["answer", "Mike Holmgren"], ["deck_id", 1], ["created_at", "2017-10-17 07:25:38.721681"], ["updated_at", "2017-10-17 07:25:38.721681"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Which neighborhood does the troll reside in?"], ["answer", "Fremont"], ["deck_id", 2], ["created_at", "2017-10-17 07:25:38.725033"], ["updated_at", "2017-10-17 07:25:38.725033"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "This is Seattle's origin neighborhood"], ["answer", "Pioneer Square"], ["deck_id", 2], ["created_at", "2017-10-17 07:25:38.729091"], ["updated_at", "2017-10-17 07:25:38.729091"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Where the settlers of Seattle originally landed"], ["answer", "Alki Beach"], ["deck_id", 2], ["created_at", "2017-10-17 07:25:38.734961"], ["updated_at", "2017-10-17 07:25:38.734961"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the richest man in the world?"], ["answer", "Bill Gates"], ["deck_id", 3], ["created_at", "2017-10-17 07:25:38.741098"], ["updated_at", "2017-10-17 07:25:38.741098"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "This man invented Jeet Kune Do."], ["answer", "Bruce Lee"], ["deck_id", 3], ["created_at", "2017-10-17 07:25:38.746552"], ["updated_at", "2017-10-17 07:25:38.746552"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "He played his guitar upside-down because he was left-handed."], ["answer", "Jimi Hendrix"], ["deck_id", 3], ["created_at", "2017-10-17 07:25:38.751290"], ["updated_at", "2017-10-17 07:25:38.751290"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:25:55 -0700
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.8ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (18.3ms)
+Completed 200 OK in 318ms (Views: 303.9ms | ActiveRecord: 5.8ms)
+
+
+Started POST "/games?id=1" for 127.0.0.1 at 2017-10-17 00:25:58 -0700
+Processing by GamesController#create as HTML
+  Parameters: {"authenticity_token"=>"5GamIMg6XCuiEPARNmWAndokvNHhPuyMO31NmBgXxNNcTfr9trZVIzF8uBE+1Toed/k9ZEmlQGyXcpQ8dXhO+w==", "id"=>"1"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.3ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 1], ["created_at", "2017-10-17 07:25:58.711875"], ["updated_at", "2017-10-17 07:25:58.711875"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mCard Load (0.4ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 1]]
+Redirected to http://localhost:3000/decks/1/cards/1
+Completed 302 Found in 88ms (ActiveRecord: 18.8ms)
+
+
+Started GET "/decks/1/cards/1" for 127.0.0.1 at 2017-10-17 00:25:58 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"1", "id"=>"1"}
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.4ms)
+Completed 200 OK in 28ms (Views: 24.4ms | ActiveRecord: 0.5ms)
+
+
+Started PUT "/games/1" for 127.0.0.1 at 2017-10-17 00:26:04 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"CCOIYubhOFmjzxMwfm/vEiRNRq/LFpKO1j1MlymZR/6wCNS/mG0xUTCjWzB231WRiZDHGmONPm56MpUzRPbN1g==", "card"=>"1", "answer"=>"the fans", "commit"=>"Submit Answer", "id"=>"1"}
+  [1m[36mGame Load (0.4ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 1], ["updated_at", "2017-10-17 07:26:04.400455"], ["id", 1]]
+  [1m[35m (5.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 1]]
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+Redirected to http://localhost:3000/decks/1/cards/2
+Completed 302 Found in 16ms (ActiveRecord: 8.0ms)
+
+
+Started GET "/decks/1/cards/2" for 127.0.0.1 at 2017-10-17 00:26:04 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"1", "id"=>"2"}
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 26ms (Views: 23.0ms | ActiveRecord: 0.6ms)
+
+
+Started PUT "/games/1" for 127.0.0.1 at 2017-10-17 00:26:14 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"P3NTaMw7l+iBc/2ytqfB/9Mv/untR5/EWLR8rKsgvyuHWA+1sree4BIftbK+F3t8fvJ/XEXcMyT0u6UIxk81Aw==", "card"=>"2", "answer"=>"January, 11 2008", "commit"=>"Submit Answer", "id"=>"1"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 1]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+Redirected to http://localhost:3000/decks/1/cards/3
+Completed 302 Found in 7ms (ActiveRecord: 1.7ms)
+
+
+Started GET "/decks/1/cards/3" for 127.0.0.1 at 2017-10-17 00:26:14 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"1", "id"=>"3"}
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 25ms (Views: 22.0ms | ActiveRecord: 0.7ms)
+
+
+Started PUT "/games/1" for 127.0.0.1 at 2017-10-17 00:26:23 -0700
+Processing by GamesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"9nOJbJ6+4LjEqZSfNaKAwYCMDU/iE+HbVq82sUMSmOROWNWx4DLpsFfF3J89EjpCLVGM+kqITTv6oO8VLn0SzA==", "card"=>"3", "answer"=>"Mike Holmgren", "commit"=>"Submit Answer", "id"=>"1"}
+  [1m[36mGame Load (0.4ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "games" SET "score" = $1, "updated_at" = $2 WHERE "games"."id" = $3[0m  [["score", 2], ["updated_at", "2017-10-17 07:26:23.081366"], ["id", 1]]
+  [1m[35m (5.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 1]]
+Redirected to http://localhost:3000/games/1
+Completed 302 Found in 14ms (ActiveRecord: 7.8ms)
+
+
+Started GET "/games/1" for 127.0.0.1 at 2017-10-17 00:26:23 -0700
+Processing by GamesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mGame Load (0.3ms)[0m  [1m[34mSELECT  "games".* FROM "games" WHERE "games"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering games/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered games/show.html.erb within layouts/application (2.3ms)
+Completed 200 OK in 26ms (Views: 22.1ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-10-17 00:26:27 -0700
+Processing by DecksController#index as HTML
+  Rendering decks/index.html.erb within layouts/application
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT "decks".* FROM "decks"[0m
+  Rendered decks/index.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 24ms (Views: 23.1ms | ActiveRecord: 0.4ms)
+
+
+Started POST "/games?id=3" for 127.0.0.1 at 2017-10-17 00:26:37 -0700
+Processing by GamesController#create as HTML
+  Parameters: {"authenticity_token"=>"XknN4AX9TZJY7mjoGXb+jidTifbr5ogC0t1oHtltKgTmYpE9e3FEmsuCIOgRxkQNio4IQ0N9JOJ+0rG6tAKgLA==", "id"=>"3"}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 3], ["created_at", "2017-10-17 07:26:37.445095"], ["updated_at", "2017-10-17 07:26:37.445095"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 3]]
+Redirected to http://localhost:3000/decks/3/cards/7
+Completed 302 Found in 13ms (ActiveRecord: 1.7ms)
+
+
+Started GET "/decks/3/cards/7" for 127.0.0.1 at 2017-10-17 00:26:37 -0700
+Processing by CardsController#show as HTML
+  Parameters: {"deck_id"=>"3", "id"=>"7"}
+  [1m[36mCard Load (0.5ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" WHERE "cards"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  Rendering cards/show.html.erb within layouts/application
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendered cards/show.html.erb within layouts/application (3.3ms)
+Completed 200 OK in 27ms (Views: 22.7ms | ActiveRecord: 0.9ms)
+
+
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (194.3ms)[0m  [1m[35mDROP DATABASE IF EXISTS "FlashCards_development"[0m
+  [1m[35m (192.5ms)[0m  [1m[35mDROP DATABASE IF EXISTS "FlashCards_test"[0m

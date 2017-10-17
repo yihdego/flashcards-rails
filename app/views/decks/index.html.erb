@@ -1,0 +1,7 @@
+<div class="index">
+  <% @decks.each do |deck| %>
+  <%= link_to deck.title, games_path(id: deck.id), method: :post %>
+
+    <p><%= deck.description %></p>
+  <% end %>
+</div>

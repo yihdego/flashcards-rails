@@ -1,0 +1,575 @@
+  [1m[35m (180.4ms)[0m  [1m[35mDROP DATABASE IF EXISTS "FlashCards_test"[0m
+  [1m[35m (378.1ms)[0m  [1m[35mCREATE DATABASE "FlashCards_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "cards" CASCADE[0m
+  [1m[35m (5.7ms)[0m  [1m[35mCREATE TABLE "cards" ("id" bigserial primary key, "question" character varying, "answer" text, "deck_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE  INDEX  "index_cards_on_deck_id" ON "cards"  ("deck_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "decks" CASCADE[0m
+  [1m[35m (3.0ms)[0m  [1m[35mCREATE TABLE "decks" ("id" bigserial primary key, "title" character varying, "description" text, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "games" CASCADE[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "games" ("id" bigserial primary key, "score" integer DEFAULT 0, "deck_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_games_on_deck_id" ON "games"  ("deck_id")[0m
+  [1m[35m (2.3ms)[0m  [1m[35mALTER TABLE "cards" ADD CONSTRAINT "fk_rails_6c4effce17"
+FOREIGN KEY ("deck_id")
+  REFERENCES "decks" ("id")
+[0m
+  [1m[35m (1.3ms)[0m  [1m[35mALTER TABLE "games" ADD CONSTRAINT "fk_rails_558f519620"
+FOREIGN KEY ("deck_id")
+  REFERENCES "decks" ("id")
+[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20171016192111)[0m
+  [1m[35m (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20171016180855),
+(20171016180910);
+
+[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "test"], ["created_at", "2017-10-17 06:20:31.481936"], ["updated_at", "2017-10-17 06:20:31.481936"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:20:31.656526"], ["updated_at", "2017-10-17 06:20:31.656526"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 1], ["created_at", "2017-10-17 06:20:31.684439"], ["updated_at", "2017-10-17 06:20:31.684439"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "games"[0m
+Processing by GamesController#create as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 1], ["created_at", "2017-10-17 06:20:31.707303"], ["updated_at", "2017-10-17 06:20:31.707303"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 1]]
+Redirected to http://test.host/decks/1/cards/1
+Completed 302 Found in 21ms (ActiveRecord: 3.1ms)
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "games"[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:20:31.723267"], ["updated_at", "2017-10-17 06:20:31.723267"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 2], ["created_at", "2017-10-17 06:20:31.727124"], ["updated_at", "2017-10-17 06:20:31.727124"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by GamesController#create as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 2], ["created_at", "2017-10-17 06:20:31.731735"], ["updated_at", "2017-10-17 06:20:31.731735"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 2]]
+Redirected to http://test.host/decks/2/cards/2
+Completed 302 Found in 5ms (ActiveRecord: 1.1ms)
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" ORDER BY "cards"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:20:31.748807"], ["updated_at", "2017-10-17 06:20:31.748807"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 3], ["created_at", "2017-10-17 06:20:31.752597"], ["updated_at", "2017-10-17 06:20:31.752597"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:20:31.758032"], ["updated_at", "2017-10-17 06:20:31.758032"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 4], ["created_at", "2017-10-17 06:20:31.761965"], ["updated_at", "2017-10-17 06:20:31.761965"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:20:31.767752"], ["updated_at", "2017-10-17 06:20:31.767752"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 5], ["created_at", "2017-10-17 06:20:31.771300"], ["updated_at", "2017-10-17 06:20:31.771300"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:20:31.777600"], ["updated_at", "2017-10-17 06:20:31.777600"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:20:31.782854"], ["updated_at", "2017-10-17 06:20:31.782854"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:20:31.788630"], ["updated_at", "2017-10-17 06:20:31.788630"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "cards" WHERE "cards"."deck_id" = $1 LIMIT $2[0m  [["deck_id", 8], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:20:31.798345"], ["updated_at", "2017-10-17 06:20:31.798345"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:20:31.804029"], ["updated_at", "2017-10-17 06:20:31.804029"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:20:31.810108"], ["updated_at", "2017-10-17 06:20:31.810108"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 11], ["created_at", "2017-10-17 06:20:31.813995"], ["updated_at", "2017-10-17 06:20:31.813995"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM "cards" WHERE "cards"."deck_id" = $1 AND "cards"."id" = $2 LIMIT $3[0m  [["deck_id", 11], ["id", 6], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:20:31.824234"], ["updated_at", "2017-10-17 06:20:31.824234"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:20:31.830219"], ["updated_at", "2017-10-17 06:20:31.830219"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 13], ["created_at", "2017-10-17 06:20:31.834017"], ["updated_at", "2017-10-17 06:20:31.834017"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:20:31.840220"], ["updated_at", "2017-10-17 06:20:31.840220"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 14], ["created_at", "2017-10-17 06:20:31.844225"], ["updated_at", "2017-10-17 06:20:31.844225"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:20:31.849890"], ["updated_at", "2017-10-17 06:20:31.849890"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 15], ["created_at", "2017-10-17 06:20:31.853942"], ["updated_at", "2017-10-17 06:20:31.853942"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:21:34.850192"], ["updated_at", "2017-10-17 06:21:34.850192"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 16], ["created_at", "2017-10-17 06:21:34.879680"], ["updated_at", "2017-10-17 06:21:34.879680"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "games"[0m
+Processing by GamesController#create as HTML
+  Parameters: {"id"=>"16"}
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 16], ["created_at", "2017-10-17 06:21:34.898097"], ["updated_at", "2017-10-17 06:21:34.898097"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Load (0.4ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 16]]
+Redirected to http://test.host/decks/16/cards/10
+Completed 302 Found in 21ms (ActiveRecord: 2.7ms)
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "games"[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:21:34.915783"], ["updated_at", "2017-10-17 06:21:34.915783"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 17], ["created_at", "2017-10-17 06:21:34.920727"], ["updated_at", "2017-10-17 06:21:34.920727"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by GamesController#create as HTML
+  Parameters: {"id"=>"17"}
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 17], ["created_at", "2017-10-17 06:21:34.925728"], ["updated_at", "2017-10-17 06:21:34.925728"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 17]]
+Redirected to http://test.host/decks/17/cards/11
+Completed 302 Found in 5ms (ActiveRecord: 1.2ms)
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT  "cards".* FROM "cards" ORDER BY "cards"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:21:34.939778"], ["updated_at", "2017-10-17 06:21:34.939778"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 18], ["created_at", "2017-10-17 06:21:34.943339"], ["updated_at", "2017-10-17 06:21:34.943339"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:21:34.948237"], ["updated_at", "2017-10-17 06:21:34.948237"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 19], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 19], ["created_at", "2017-10-17 06:21:34.951322"], ["updated_at", "2017-10-17 06:21:34.951322"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:21:34.955968"], ["updated_at", "2017-10-17 06:21:34.955968"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 20], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 20], ["created_at", "2017-10-17 06:21:34.959128"], ["updated_at", "2017-10-17 06:21:34.959128"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:21:34.964388"], ["updated_at", "2017-10-17 06:21:34.964388"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:21:34.968650"], ["updated_at", "2017-10-17 06:21:34.968650"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:21:34.972721"], ["updated_at", "2017-10-17 06:21:34.972721"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "cards" WHERE "cards"."deck_id" = $1 LIMIT $2[0m  [["deck_id", 23], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:21:34.981367"], ["updated_at", "2017-10-17 06:21:34.981367"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:21:34.987074"], ["updated_at", "2017-10-17 06:21:34.987074"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:21:34.993533"], ["updated_at", "2017-10-17 06:21:34.993533"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 26], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 26], ["created_at", "2017-10-17 06:21:34.997657"], ["updated_at", "2017-10-17 06:21:34.997657"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "cards" WHERE "cards"."deck_id" = $1 AND "cards"."id" = $2 LIMIT $3[0m  [["deck_id", 26], ["id", 15], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:21:35.006332"], ["updated_at", "2017-10-17 06:21:35.006332"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:21:35.011830"], ["updated_at", "2017-10-17 06:21:35.011830"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 28], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 28], ["created_at", "2017-10-17 06:21:35.015227"], ["updated_at", "2017-10-17 06:21:35.015227"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:21:35.019582"], ["updated_at", "2017-10-17 06:21:35.019582"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.1ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 29], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 29], ["created_at", "2017-10-17 06:21:35.022607"], ["updated_at", "2017-10-17 06:21:35.022607"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:21:35.027665"], ["updated_at", "2017-10-17 06:21:35.027665"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 30], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 30], ["created_at", "2017-10-17 06:21:35.031251"], ["updated_at", "2017-10-17 06:21:35.031251"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:22:22.347586"], ["updated_at", "2017-10-17 06:22:22.347586"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.4ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 31], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 31], ["created_at", "2017-10-17 06:22:22.377410"], ["updated_at", "2017-10-17 06:22:22.377410"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "games"[0m
+Processing by GamesController#create as HTML
+  Parameters: {"id"=>"31"}
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 31], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 31], ["created_at", "2017-10-17 06:22:22.401002"], ["updated_at", "2017-10-17 06:22:22.401002"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Load (0.4ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 31]]
+Redirected to http://test.host/decks/31/cards/19
+Completed 302 Found in 25ms (ActiveRecord: 4.3ms)
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "games"[0m
+  [1m[35m (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:22:22.418677"], ["updated_at", "2017-10-17 06:22:22.418677"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.5ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 32], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 32], ["created_at", "2017-10-17 06:22:22.424533"], ["updated_at", "2017-10-17 06:22:22.424533"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by GamesController#create as HTML
+  Parameters: {"id"=>"32"}
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 32], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 32], ["created_at", "2017-10-17 06:22:22.428980"], ["updated_at", "2017-10-17 06:22:22.428980"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 32]]
+Redirected to http://test.host/decks/32/cards/20
+Completed 302 Found in 4ms (ActiveRecord: 1.0ms)
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:22:22.441725"], ["updated_at", "2017-10-17 06:22:22.441725"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 33], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 33], ["created_at", "2017-10-17 06:22:22.444897"], ["updated_at", "2017-10-17 06:22:22.444897"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:22:22.449436"], ["updated_at", "2017-10-17 06:22:22.449436"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 34], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 34], ["created_at", "2017-10-17 06:22:22.452444"], ["updated_at", "2017-10-17 06:22:22.452444"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:22:22.457706"], ["updated_at", "2017-10-17 06:22:22.457706"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 35], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 35], ["created_at", "2017-10-17 06:22:22.460692"], ["updated_at", "2017-10-17 06:22:22.460692"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:22:22.465434"], ["updated_at", "2017-10-17 06:22:22.465434"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:22:22.469683"], ["updated_at", "2017-10-17 06:22:22.469683"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:22:22.474930"], ["updated_at", "2017-10-17 06:22:22.474930"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "cards" WHERE "cards"."deck_id" = $1 LIMIT $2[0m  [["deck_id", 38], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:22:22.482361"], ["updated_at", "2017-10-17 06:22:22.482361"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:22:22.486858"], ["updated_at", "2017-10-17 06:22:22.486858"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:22:22.492015"], ["updated_at", "2017-10-17 06:22:22.492015"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 41], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 41], ["created_at", "2017-10-17 06:22:22.495618"], ["updated_at", "2017-10-17 06:22:22.495618"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "cards" WHERE "cards"."deck_id" = $1 AND "cards"."id" = $2 LIMIT $3[0m  [["deck_id", 41], ["id", 24], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:22:22.502921"], ["updated_at", "2017-10-17 06:22:22.502921"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:22:22.508445"], ["updated_at", "2017-10-17 06:22:22.508445"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.1ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 43], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 43], ["created_at", "2017-10-17 06:22:22.511919"], ["updated_at", "2017-10-17 06:22:22.511919"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:22:22.516700"], ["updated_at", "2017-10-17 06:22:22.516700"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 44], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 44], ["created_at", "2017-10-17 06:22:22.520211"], ["updated_at", "2017-10-17 06:22:22.520211"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:22:22.525436"], ["updated_at", "2017-10-17 06:22:22.525436"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.1ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 45], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 45], ["created_at", "2017-10-17 06:22:22.528887"], ["updated_at", "2017-10-17 06:22:22.528887"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:23:07.685975"], ["updated_at", "2017-10-17 06:23:07.685975"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 46], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 46], ["created_at", "2017-10-17 06:23:07.715602"], ["updated_at", "2017-10-17 06:23:07.715602"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "games"[0m
+Processing by GamesController#create as HTML
+  Parameters: {"id"=>"46"}
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 46], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 46], ["created_at", "2017-10-17 06:23:07.732862"], ["updated_at", "2017-10-17 06:23:07.732862"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Load (0.3ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 46]]
+Redirected to http://test.host/decks/46/cards/28
+Completed 302 Found in 18ms (ActiveRecord: 2.5ms)
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "games"[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:23:07.749730"], ["updated_at", "2017-10-17 06:23:07.749730"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.3ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 47], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 47], ["created_at", "2017-10-17 06:23:07.754190"], ["updated_at", "2017-10-17 06:23:07.754190"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by GamesController#create as HTML
+  Parameters: {"id"=>"47"}
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 47], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "games" ("deck_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["deck_id", 47], ["created_at", "2017-10-17 06:23:07.758124"], ["updated_at", "2017-10-17 06:23:07.758124"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Load (0.2ms)[0m  [1m[34mSELECT "cards".* FROM "cards" WHERE "cards"."deck_id" = $1[0m  [["deck_id", 47]]
+Redirected to http://test.host/decks/47/cards/29
+Completed 302 Found in 4ms (ActiveRecord: 1.0ms)
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:23:07.771843"], ["updated_at", "2017-10-17 06:23:07.771843"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 48], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 48], ["created_at", "2017-10-17 06:23:07.775339"], ["updated_at", "2017-10-17 06:23:07.775339"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:23:07.780499"], ["updated_at", "2017-10-17 06:23:07.780499"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 49], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 49], ["created_at", "2017-10-17 06:23:07.783807"], ["updated_at", "2017-10-17 06:23:07.783807"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:23:07.789217"], ["updated_at", "2017-10-17 06:23:07.789217"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 50], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 50], ["created_at", "2017-10-17 06:23:07.792372"], ["updated_at", "2017-10-17 06:23:07.792372"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:23:07.798651"], ["updated_at", "2017-10-17 06:23:07.798651"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:23:07.805513"], ["updated_at", "2017-10-17 06:23:07.805513"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:23:07.810828"], ["updated_at", "2017-10-17 06:23:07.810828"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "cards" WHERE "cards"."deck_id" = $1 LIMIT $2[0m  [["deck_id", 53], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:23:07.817845"], ["updated_at", "2017-10-17 06:23:07.817845"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:23:07.823265"], ["updated_at", "2017-10-17 06:23:07.823265"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:23:07.831339"], ["updated_at", "2017-10-17 06:23:07.831339"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.4ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 56], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 56], ["created_at", "2017-10-17 06:23:07.836488"], ["updated_at", "2017-10-17 06:23:07.836488"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCard Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "cards" WHERE "cards"."deck_id" = $1 AND "cards"."id" = $2 LIMIT $3[0m  [["deck_id", 56], ["id", 33], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:23:07.844042"], ["updated_at", "2017-10-17 06:23:07.844042"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:23:07.849247"], ["updated_at", "2017-10-17 06:23:07.849247"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 58], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 58], ["created_at", "2017-10-17 06:23:07.852890"], ["updated_at", "2017-10-17 06:23:07.852890"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:23:07.858096"], ["updated_at", "2017-10-17 06:23:07.858096"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 59], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 59], ["created_at", "2017-10-17 06:23:07.861624"], ["updated_at", "2017-10-17 06:23:07.861624"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "decks" ("title", "description", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Seahawks Facts"], ["description", "Questions about the Seattle Seahawks football team."], ["created_at", "2017-10-17 06:23:07.867468"], ["updated_at", "2017-10-17 06:23:07.867468"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mDeck Load (0.2ms)[0m  [1m[34mSELECT  "decks".* FROM "decks" WHERE "decks"."id" = $1 LIMIT $2[0m  [["id", 60], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "cards" ("question", "answer", "deck_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["question", "Who's the 12th Man"], ["answer", "the fans"], ["deck_id", 60], ["created_at", "2017-10-17 06:23:07.870979"], ["updated_at", "2017-10-17 06:23:07.870979"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m

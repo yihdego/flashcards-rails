@@ -1,0 +1,10 @@
+<h1><%= @card.deck.title %></h1>
+<div class="show-container">
+  <%= form_tag "/games/#{session[:game]}", :method => :put do %>
+    <%= hidden_field_tag('card', @card.id) %>
+    <%= label_tag(:answer, @card.question) %>
+    <%= text_field_tag(:answer) %>
+    <%= submit_tag("Submit Answer") %>
+  <% end %>
+
+</div>

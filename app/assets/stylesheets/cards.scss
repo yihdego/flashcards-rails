@@ -1,0 +1,38 @@
+// Place all the styles related to the cards controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.cards-show body {
+    background-image: url('/pexels-photo-419235.jpeg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+
+h1 {
+  text-align: center;
+}
+
+.show-container form {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+  display: block;
+  font-size: 1.3em;
+}
+
+.show-container label {
+  display: block;
+  margin-top: 15px;
+}
+
+.show-container input {
+  width: 70%;
+  display: block;
+  text-align: center;
+  box-sizing: border-box;
+  font-size: 1em;
+  margin: 15px auto;
+}
